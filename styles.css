@@ -1,0 +1,226 @@
+/* Evita scroll y permite pantalla completa */
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+h1 {
+    display: none;
+}
+
+/* Estilo general */
+body {
+    font-family: Arial, sans-serif;
+    background: #1e1e1e;
+    color: white;
+}
+
+/* Información superior */
+/* Barra HUD */
+#info {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    gap: 12px;
+    padding: 8px 14px;
+    background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(30,30,30,0.7));
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+    z-index: 10;
+}
+
+/* Cada item */
+.hud-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Iconos */
+.label {
+    font-size: 16px;
+}
+
+/* Puntaje */
+.score {
+    color: #00ffcc;
+}
+
+/* Tiempo */
+.time {
+    color: #ffcc00;
+}
+
+/* Animación del puntaje */
+#score {
+    transition: transform 0.2s;
+}
+
+.score-anim {
+    transform: scale(1.3);
+}
+
+
+/* Botón */
+button {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    font-size: 16px;
+    z-index: 10;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+}
+
+/* Área del juego */
+#game {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    cursor: crosshair;
+
+    background-image: url("assets/img/fondo-1.jpg");
+    background-size: cover;        /* Ajusta la imagen a la pantalla */
+    background-position: center;   /* Centra la imagen */
+    background-repeat: no-repeat;  /* No se repite */
+}
+
+/* Blanco */
+.target {
+    will-change: transform, opacity;
+    transform-origin: center;
+
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: absolute;
+    cursor: pointer;
+    background: radial-gradient(circle,#ffffff5d 0%,#ffffff4d 40%, #ffffffda 70%,#ffffff 100%);
+}
+
+.target::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("assets/img/logo-wanapo.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 75%;
+    pointer-events: none; /* 🔑 no bloquea clicks */
+}
+
+@keyframes targetIn {
+    from {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Animación de salida */
+@keyframes targetOut {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+}
+
+/* Clases para animar */
+.target.enter {
+    animation: targetIn 0.25s ease-out;
+}
+
+.target.exit {
+    animation: targetOut 0.25s ease-in;
+}
+
+@keyframes breathe {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+.target.idle {
+    animation: breathe 2s ease-in-out infinite;
+}
+
+#resultOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    display: none; /* 🔑 OCULTO POR DEFECTO */
+}
+
+#resultOverlay.show {
+    display: flex;
+}
+
+
+/* Caja central */
+.result-box {
+    background: linear-gradient(135deg, #111, #222);
+    padding: 30px 40px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    min-width: 280px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    animation: popIn 0.4s ease-out;
+}
+
+/* Puntuación grande */
+.final-score {
+    font-size: 48px;
+    font-weight: bold;
+    color: #00ffcc;
+    margin: 10px 0 20px;
+}
+
+/* Botón */
+.result-box button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* Oculto */
+.hidden {
+    display: none;
+}
+
+/* Animación */
+@keyframes popIn {
+    from {
+        transform: scale(0.6);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
